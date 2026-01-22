@@ -1,0 +1,81 @@
+<div class="bg-white rounded-2xl shadow-2xl w-full max-w-xl p-6">
+
+  <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">
+    🌤 Weather App
+  </h1>
+
+  <% if flash[:alert] %>
+    <div class="bg-red-100 text-red-700 p-3 rounded mb-4 text-center">
+      <%= flash[:alert] %>
+    </div>
+  <% end %>
+
+  <!-- Search Form -->
+  <%= form_with url: weather_path, method: :post, local: true do %>
+    <div class="flex gap-2">
+      <input
+        type="text"
+        name="city"
+        placeholder="Enter city"
+        class="flex-1 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+      >
+      <button
+        class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+        Search
+      </button>
+    </div>
+  <% end %>
+
+  <% if @current %>
+    <!-- Current Weather -->
+    <div class="mt-6 text-center bg-blue-50 rounded-xl p-5">
+      <h2 class="text-xl font-semibold text-gray-800">
+        📍 <%= @current[:city] %>, <%= @current[:country] %>
+      </h2>
+
+      <img
+        class="mx-auto my-3"
+        src="https://openweathermap.org/img/wn/<%= @current[:icon] %>@2x.png"
+        alt="weather icon"
+      >
+
+      <p class="text-4xl font-bold text-blue-700">
+        <%= @current[:temp] %>°C
+      </p>
+
+      <p class="text-gray-700 capitalize">
+        <%= @current[:condition] %>
+      </p>
+
+      <div class="flex justify-center gap-6 mt-4 text-gray-700">
+        <p>💧 <%= @current[:humidity] %>%</p>
+        <p>🌬 <%= @current[:wind] %> m/s</p>
+      </div>
+    </div>
+
+    <!-- Forecast -->
+    <h3 class="mt-6 mb-3 text-lg font-semibold text-gray-800 text-center">
+      5-Day Forecast
+    </h3>
+
+    <div class="grid grid-cols-2 sm:grid-cols-5 gap-3">
+      <% @forecast.each do |day| %>
+        <div class="bg-indigo-50 rounded-lg p-3 text-center">
+          <p class="text-sm font-medium text-gray-700">
+            <%= day[:date] %>
+          </p>
+
+          <img
+            class="mx-auto"
+            src="https://openweathermap.org/img/wn/<%= day[:icon] %>.png"
+          >
+
+          <p class="text-sm font-semibold text-gray-800">
+            <%= day[:temp] %>°C
+          </p>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+</div>

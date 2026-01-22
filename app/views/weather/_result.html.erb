@@ -1,0 +1,30 @@
+<div class="mt-6 text-center">
+
+  <h2 class="text-xl font-semibold mb-2">
+    📍 <%= @current[:city] %>, <%= @current[:country] %>
+  </h2>
+
+  <img class="mx-auto"
+       src="https://openweathermap.org/img/wn/<%= @current[:icon] %>@2x.png">
+
+  <p class="text-4xl font-bold"><%= @current[:temp] %>°C</p>
+  <p class="mb-2"><%= @current[:condition] %></p>
+
+  <p>💧 Humidity: <%= @current[:humidity] %>%</p>
+  <p>🌬 Wind: <%= @current[:wind] %> m/s</p>
+
+  <hr class="my-4">
+
+  <h3 class="text-lg font-semibold mb-2">5-Day Forecast</h3>
+
+  <div class="grid grid-cols-5 gap-2 text-sm">
+    <% @forecast.each do |day| %>
+      <div class="bg-blue-100 rounded-lg p-2">
+        <p><%= day[:date] %></p>
+        <img src="https://openweathermap.org/img/wn/<%= day[:icon] %>.png">
+        <p><%= day[:temp] %>°C</p>
+      </div>
+    <% end %>
+  </div>
+
+</div>
